@@ -19,4 +19,6 @@ public class Constants {
   public static final String REPORTS_EMAIL_ADDRESS = "support@thebank.com";
 
   public static final String SYSTEM_EMAIL_ADDRESS = "banksystem@thebank.com";
+
+  public static final String NO_ACCOUNTS_MESSAGE = "No accounts to display";
 }

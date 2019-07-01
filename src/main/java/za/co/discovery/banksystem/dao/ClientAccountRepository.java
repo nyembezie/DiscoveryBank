@@ -22,7 +22,7 @@ public interface ClientAccountRepository extends JpaRepository<ClientAccount, St
 
 
   @Query("SELECT ca.clientAccountNumber, ccr.currencyCode, ca.displayBalance,\n"
-      + " ccr.rate, (ca.displayBalance * ccr.rate) as ZAR_Amount \n"
+      + " ccr.rate, round((ca.displayBalance * ccr.rate),2) as ZAR_Amount \n"
       + " FROM ClientAccount ca join CurrencyConversionRate ccr on \n"
       + " ca.currency = ccr.currencyCode \n"
       + " where ca.client = ?1"

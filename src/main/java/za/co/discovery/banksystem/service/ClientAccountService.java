@@ -11,6 +11,7 @@ import za.co.discovery.banksystem.dao.ClientRepository;
 import za.co.discovery.banksystem.dao.DenominationRepository;
 import za.co.discovery.banksystem.exception.ActionNotAllowedException;
 import za.co.discovery.banksystem.exception.ClientNotFoundException;
+import za.co.discovery.banksystem.exception.DataNotFounfException;
 import za.co.discovery.banksystem.model.Atm;
 import za.co.discovery.banksystem.model.AtmAllocation;
 import za.co.discovery.banksystem.model.Client;
@@ -48,13 +49,17 @@ public class ClientAccountService {
   public List<Object[]> getClientTransactionalAccount(Integer clientId) {
 
     Client client = clientRepository.findById(clientId).get();
+    List<Object[]> accounts = null;
 
     if(client != null) {
-      return clientAccountRepository.findTransactionalClientAccounts(client);
+      accounts = clientAccountRepository.findTransactionalClientAccounts(client);
+      if(accounts == null) {
+        throw new DataNotFounfException(Constants.NO_ACCOUNTS_MESSAGE);
+      }
     } else {
       throw new ClientNotFoundException("Could not find client with id:" + clientId);
     }
-
+    return accounts;
   }
 
   public List<Object[]> getCurrencyAccountWithConvertedValues(Integer clientId) {
