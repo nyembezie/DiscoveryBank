@@ -53,7 +53,7 @@ public class ClientAccountService {
 
     if(client != null) {
       accounts = clientAccountRepository.findTransactionalClientAccounts(client);
-      if(accounts == null) {
+      if(accounts == null || accounts.size() < 1) {
         throw new DataNotFounfException(Constants.NO_ACCOUNTS_MESSAGE);
       }
     } else {
@@ -81,6 +81,11 @@ public class ClientAccountService {
       throw new ClientNotFoundException("Could not find client with id:" + clientId);
     }
 
+    ClientAccount cAccount = clientAccountRepository.findById(accountNumber).get();
+    if(cAccount == null) {
+      throw new DataNotFounfException(Constants.ACCOUNT_NOT_FOUND_MESSAGE);
+    }
+
     Boolean isTransactionalAccount = clientAccountRepository.isAccountTransactional(accountNumber);
     if(!isTransactionalAccount) {
       throw new ActionNotAllowedException(String.format("Withdrawals can only be done from transactional account. %s not transactional", accountNumber));
@@ -92,7 +97,7 @@ public class ClientAccountService {
     }
 
     if(amount % 10 > 0) {
-      throw new ActionNotAllowedException(String.format(Constants.ATM_AMOUNT_MESSAGE, roundDownToNearestTen(amount)));
+      throw new ActionNotAllowedException(String.format(Constants.ATM_AMOUNT_MESSAGE,  roundDownToNearestTen(amount)));
     }
 
     List<AtmAllocation> atmAllocations = atmAllocationRepository.findAllByAtmId(atm.getId());

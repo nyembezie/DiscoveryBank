@@ -11,8 +11,7 @@ import java.util.List;
 @Repository
 public interface ClientAccountRepository extends JpaRepository<ClientAccount, String> {
 
-  @Query("SELECT ca.clientAccountNumber, ca.client, ca.accountType, "
-      + " ca.clientAccountNumber, ca.currency, ca.displayBalance FROM ClientAccount ca\n"
+  @Query("SELECT ca.clientAccountNumber, at.description, ca.displayBalance FROM ClientAccount ca\n"
       + " JOIN AccountType at ON \n"
       + " ca.accountType = at.accountTypeCode \n"
       + " WHERE at.transactional = true\n"
@@ -21,12 +20,16 @@ public interface ClientAccountRepository extends JpaRepository<ClientAccount, St
   List<Object[]> findTransactionalClientAccounts(Client client);
 
 
-  @Query("SELECT ca.clientAccountNumber, ccr.currencyCode, ca.displayBalance,\n"
-      + " ccr.rate, round((ca.displayBalance * ccr.rate),2) as ZAR_Amount \n"
-      + " FROM ClientAccount ca join CurrencyConversionRate ccr on \n"
+  @Query("SELECT ca.clientAccountNumber, ccr.currencyCode, ca.displayBalance, ccr.rate, \n"
+      + " CASE\n"
+      + "   WHEN  ccr.conversionIndicator = '/' THEN  ROUND((ca.displayBalance / ccr.rate),2) \n"
+      + "   WHEN  ccr.conversionIndicator = '*' THEN  ROUND((ca.displayBalance * ccr.rate),2)\n"
+      + " END AS RAND_AMOUNT\n"
+      + " FROM ClientAccount ca\n"
+      + " JOIN CurrencyConversionRate ccr ON \n"
       + " ca.currency = ccr.currencyCode \n"
-      + " where ca.client = ?1"
-      + " order by ZAR_Amount")
+      + " WHERE ca.client = ?1"
+      + " ORDER BY RAND_AMOUNT DESC")
   List<Object[]> getCurrencyAccountWithConvertedValues(Client client);
 
   ClientAccount findAllByClientAccountNumberAndClient_Id(String accountNumber, Integer clientId);

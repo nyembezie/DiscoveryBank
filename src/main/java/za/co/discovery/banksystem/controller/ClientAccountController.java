@@ -10,9 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
-import za.co.discovery.banksystem.exception.MalformedRequestException;
 import za.co.discovery.banksystem.service.ClientAccountService;
-import za.co.discovery.banksystem.util.Constants;
 
 import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
@@ -31,14 +29,9 @@ public class ClientAccountController {
 
   @GetMapping("clienttransactionaccounts")
   public @ResponseBody List<Object[]> getClientTransactionalAccount(@RequestParam @NotNull Integer clientId,
-      @RequestParam("localdatetime") @NotNull @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime localdatetime,
-      @RequestParam @NotNull Boolean isClientLoggedIn) {
+      @RequestParam("localdatetime") @NotNull @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime localdatetime) {
 
-    LOG.info("getClientTransactionalAccount: id={}, timeStamp={}, isClientLoggedIn={}", clientId, localdatetime, isClientLoggedIn);
-
-    if(!isClientLoggedIn) {
-      throw new MalformedRequestException(Constants.AUTH_EXCEPTION_MESSAGE);
-    }
+    LOG.info("getClientTransactionalAccount: id={}, timeStamp={}", clientId, localdatetime);
 
     return this.clientAccountService.getClientTransactionalAccount(clientId);
 
@@ -46,33 +39,23 @@ public class ClientAccountController {
 
   @GetMapping("randconvertedbalances")
   public List<Object[]> getBalancesWithConvertedRandValues(@RequestParam @NotNull Integer clientId,
-      @RequestParam("localdatetime") @NotNull @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime localdatetime,
-      @RequestParam @NotNull Boolean isClientLoggedIn) throws Exception {
+      @RequestParam("localdatetime") @NotNull @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime localdatetime) throws Exception {
 
-    LOG.info("getBalancesWithConvertedRandValues: id={}, localdatetime={}, isClientLoggedIn={}", clientId, localdatetime, isClientLoggedIn);
+    LOG.info("getBalancesWithConvertedRandValues: id={}, localdatetime={}", clientId, localdatetime);
 
-    if(!isClientLoggedIn) {
-      throw new MalformedRequestException(Constants.AUTH_EXCEPTION_MESSAGE);
-    }
     return this.clientAccountService.getCurrencyAccountWithConvertedValues(clientId);
   }
 
   @GetMapping("withdraw")
   public void withdrawCash(@RequestParam @NotNull Integer clientId,
       @RequestParam("localdatetime") @NotNull @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime localdatetime,
-      @RequestParam @NotNull Boolean isClientLoggedIn,
       @RequestParam @NotNull Integer atmId, @RequestParam @NotNull String accountNumber,
       @RequestParam @NotNull Double amount) {
 
-    LOG.info("withdrawCash: id={}, localdatetime={}, isClientLoggedIn={}, id={}, accountNumber={}, amount={} ",
-        clientId, localdatetime, isClientLoggedIn, atmId, accountNumber, amount);
-
-    if(!isClientLoggedIn) {
-      throw new MalformedRequestException(Constants.AUTH_EXCEPTION_MESSAGE);
-    }
+    LOG.info("withdrawCash: id={}, localdatetime={}, id={}, accountNumber={}, amount={} ",
+        clientId, localdatetime, atmId, accountNumber, amount);
 
     this.clientAccountService.withdrawCash(clientId, atmId, accountNumber, amount);
-
 
   }
 

@@ -32,8 +32,8 @@ public class ClientAccountRepositoryTest {
 
     // then
     assertThat(clientAccountsResults.size()).isEqualTo(3);
-    assertThat((Double)clientAccountsResults.get(0)[5]).isGreaterThanOrEqualTo((Double)clientAccountsResults.get(1)[5]);
-    assertThat((Double)clientAccountsResults.get(1)[5]).isGreaterThanOrEqualTo((Double)clientAccountsResults.get(2)[5]);
+    assertThat((Double)clientAccountsResults.get(0)[2]).isGreaterThanOrEqualTo((Double)clientAccountsResults.get(1)[2]);
+    assertThat((Double)clientAccountsResults.get(1)[2]).isGreaterThanOrEqualTo((Double)clientAccountsResults.get(2)[2]);
   }
 
   @Test
@@ -46,7 +46,9 @@ public class ClientAccountRepositoryTest {
 
     // then
     assertThat(clientAccounts.size()).isEqualTo(6);
-    assertThat((Double)clientAccounts.get(0)[2] * (Double)clientAccounts.get(0)[3]).isEqualTo(clientAccounts.get(0)[4]);
+    assertThat((Double)clientAccounts.get(0)[4]).isGreaterThanOrEqualTo((Double)clientAccounts.get(1)[4]);
+    assertThat((Double)clientAccounts.get(1)[4]).isGreaterThanOrEqualTo((Double)clientAccounts.get(2)[4]);
+    assertThat((Double)clientAccounts.get(2)[4]).isGreaterThanOrEqualTo((Double)clientAccounts.get(3)[4]);
   }
 
   @Test

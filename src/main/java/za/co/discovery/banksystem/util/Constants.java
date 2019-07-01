@@ -10,7 +10,7 @@ public class Constants {
 
   public static final String ATM_EXCEPTION_MESSAGE = "ATM not registered or unfunded";
 
-  public static final String ATM_AMOUNT_MESSAGE = "Amount not available, would you like to draw %f";
+  public static final String ATM_AMOUNT_MESSAGE = "Amount not available, would you like to draw %.2f";
 
   public static final String CSV_HIGHEST_BALANCE_PER_CLIENT_HEADER[] = {"CLIENT ID", "CLIENT SURNAME", "CLIENT ACCOUNT NUMBER", "ACCOUNT DESCRIPTION", "DISPLAY BALANCE"};
 
@@ -21,4 +21,6 @@ public class Constants {
   public static final String SYSTEM_EMAIL_ADDRESS = "banksystem@thebank.com";
 
   public static final String NO_ACCOUNTS_MESSAGE = "No accounts to display";
+
+  public static final String ACCOUNT_NOT_FOUND_MESSAGE = "Client account does not exist";
 }
