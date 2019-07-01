@@ -11,6 +11,4 @@ public interface AtmAllocationRepository extends JpaRepository<AtmAllocation, In
 
   List<AtmAllocation> findAllByAtmId(Integer atmId);
 
-//  @Query("select al.denomination from AtmAllocation al where al.atm = ?1")
-//  List<Denomination> findAllDenominationsByAtmId(Atm atm);
 }

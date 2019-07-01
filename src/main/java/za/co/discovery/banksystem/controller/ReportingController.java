@@ -14,8 +14,6 @@ import za.co.discovery.banksystem.service.ReportingService;
 @RestController
 public class ReportingController {
 
-  private static final Logger LOG = LoggerFactory.getLogger(ReportingController.class);
-
   @Autowired
   private ReportingService reportingService;
 
