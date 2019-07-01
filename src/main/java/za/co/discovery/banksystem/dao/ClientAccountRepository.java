@@ -28,7 +28,8 @@ public interface ClientAccountRepository extends JpaRepository<ClientAccount, St
       + " FROM ClientAccount ca\n"
       + " JOIN CurrencyConversionRate ccr ON \n"
       + " ca.currency = ccr.currencyCode \n"
-      + " WHERE ca.client = ?1"
+      + " WHERE ca.accountType = 'CFCA'"
+      + " AND ca.client = ?1"
       + " ORDER BY RAND_AMOUNT DESC")
   List<Object[]> getCurrencyAccountWithConvertedValues(Client client);
 

@@ -45,10 +45,7 @@ public class ClientAccountRepositoryTest {
     List<Object[]> clientAccounts = clientAccountRepository.getCurrencyAccountWithConvertedValues(client);
 
     // then
-    assertThat(clientAccounts.size()).isEqualTo(6);
-    assertThat((Double)clientAccounts.get(0)[4]).isGreaterThanOrEqualTo((Double)clientAccounts.get(1)[4]);
-    assertThat((Double)clientAccounts.get(1)[4]).isGreaterThanOrEqualTo((Double)clientAccounts.get(2)[4]);
-    assertThat((Double)clientAccounts.get(2)[4]).isGreaterThanOrEqualTo((Double)clientAccounts.get(3)[4]);
+    assertThat(clientAccounts.size()).isEqualTo(1);
   }
 
   @Test

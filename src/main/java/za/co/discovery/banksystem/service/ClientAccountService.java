@@ -74,7 +74,7 @@ public class ClientAccountService {
 
   }
 
-  public void withdrawCash(Integer clientId, Integer atmId, String accountNumber, Double amount) throws ActionNotAllowedException {
+  public Map<Double, Integer> withdrawCash(Integer clientId, Integer atmId, String accountNumber, Double amount) throws ActionNotAllowedException {
 
     Client client = clientRepository.findById(clientId).get();
     if(client == null) {
@@ -125,12 +125,17 @@ public class ClientAccountService {
       } else {
         throw new ActionNotAllowedException(Constants.INSUFFICIENT_FUNDS);
       }
-      throw new ActionNotAllowedException(Constants.INSUFFICIENT_FUNDS);
     } else {
       dispenseMap = calculateNotesToDispense(atmAllocations, amount);
     }
 
-    updateDbWithdrawCash(dispenseMap, clientAccount, atmAllocations, amount);
+    try {
+      updateDbWithdrawCash(dispenseMap, clientAccount, atmAllocations, amount);
+    } catch(Exception ex) {
+      LOG.error("withdrawCash: error withdrawing cash");
+      throw ex;
+    }
+    return dispenseMap;
 
   }
 

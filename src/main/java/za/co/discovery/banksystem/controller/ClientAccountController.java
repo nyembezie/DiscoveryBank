@@ -15,6 +15,7 @@ import za.co.discovery.banksystem.service.ClientAccountService;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Map;
 
 @Api(value="Client Account", description="Client Account Resource REST Endpoints")
 @RequestMapping("/banksystem/api/clientaccount")
@@ -47,7 +48,7 @@ public class ClientAccountController {
   }
 
   @GetMapping("withdraw")
-  public void withdrawCash(@RequestParam @NotNull Integer clientId,
+  public Map<Double, Integer> withdrawCash(@RequestParam @NotNull Integer clientId,
       @RequestParam("localdatetime") @NotNull @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime localdatetime,
       @RequestParam @NotNull Integer atmId, @RequestParam @NotNull String accountNumber,
       @RequestParam @NotNull Double amount) {
@@ -55,7 +56,7 @@ public class ClientAccountController {
     LOG.info("withdrawCash: id={}, localdatetime={}, id={}, accountNumber={}, amount={} ",
         clientId, localdatetime, atmId, accountNumber, amount);
 
-    this.clientAccountService.withdrawCash(clientId, atmId, accountNumber, amount);
+    return this.clientAccountService.withdrawCash(clientId, atmId, accountNumber, amount);
 
   }
 
