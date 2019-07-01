@@ -1,9 +1,6 @@
 # Bank balance and dispensing system
 
 ## set-up
-- update, in application.properties file, where you want reports to be saved(see use case 4 & 5) 
-    - use case 4: reporting.highestbalanceaccount.filepath
-    - use case 5: reporting.aggregateposition.filepath
 
 - mvn clean package
 
@@ -18,17 +15,17 @@
 
 ## use cases
 1. Display transactional accounts with balances
-    - example request: http://localhost:8080/banksystem/api/clientaccount/clienttransactionaccounts?clientId=2&isClientLoggedIn=true&localdatetime=2019-06-30T00:00:00
+    - example request: http://localhost:8080/banksystem/api/clientaccount/clienttransactionaccounts?clientId=2&localdatetime=2019-06-30T00:00:00
     
 2. Display currency accounts with converted Rand values
-    - example request: http://localhost:8080/banksystem/api/clientaccount/randconvertedbalances?clientId=1&localdatetime=2019-06-30T00:00:00&isClientLoggedIn=true
+    - example request: http://localhost:8080/banksystem/api/clientaccount/randconvertedbalances?clientId=1&localdatetime=2019-06-30T00:00:00
     
 3. Withdraw cash
-    - example request: http://localhost:8080/banksystem/api/clientaccount/withdraw?clientId=1&localdatetime=2019-06-30T00:00:00&isClientLoggedIn=true&atmId=2&accountNumber=1053664521&amount=250
+    - example request: http://localhost:8080/banksystem/api/clientaccount/withdraw?clientId=1&localdatetime=2019-06-30T00:00:00&atmId=2&accountNumber=1053664521&amount=250
 
 
 4. Reporting – Find the transactional account per client with the highest balance
-    - example request: http://localhost:8080/banksystem/api/reporting/highestbalanceaccount
+    - src/main/resources/static/highestTransactionalAccountBalancePerClient.sql
 
 5. Reporting – Calculate aggregate financial position per client
-    - example request: http://localhost:8080/banksystem/api/reporting/aggregateposition
+    - src/main/resources/static/aggregateFinancialPositionPerClient.sql
