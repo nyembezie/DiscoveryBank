@@ -1,6 +1,6 @@
 # Bank balance and dispensing system
 
-# set-up
+## set-up
 - update, in application.properties file, where you want reports to be saved(see use case 4 & 5) 
     - use case 4: reporting.highestbalanceaccount.filepath
     - use case 5: reporting.aggregateposition.filepath
@@ -11,12 +11,12 @@
 
 - java -jar banksystem-0.0.1-SNAPSHOT.jar 
 
-#url's
+## url's
 - swagger page : http://localhost:8080/swagger-ui.html
 
 - h2 database console: http://localhost:8080/h2-console
 
-#USE CASES
+## use cases
 1. Display transactional accounts with balances
     - example request: http://localhost:8080/banksystem/api/clientaccount/clienttransactionaccounts?clientId=2&isClientLoggedIn=true&localdatetime=2019-06-30T00:00:00
     
